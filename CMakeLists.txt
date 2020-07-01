@@ -12,8 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
 )
 
-set(DEPENDENCIES realsense2)
-
+set(REALSENSE_INCLUDE /opt/ros/melodic/include/)
+set(REALSENSE_SRC /opt/ros/melodic/lib/librealsense2.so.2.33.1)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES d435_camera
@@ -28,7 +28,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  /usr/local/include/librealsense2/
+  ${REALSENSE_INCLUDE}
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -36,7 +36,7 @@ include_directories(
  add_executable(camera src/main.cpp)
  add_dependencies(camera ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  target_link_libraries(camera ${catkin_LIBRARIES})
- target_link_libraries(camera ${DEPENDENCIES})
+ target_link_libraries(camera ${REALSENSE_SRC})
 
 #############
 ## Install ##

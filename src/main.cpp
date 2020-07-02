@@ -31,8 +31,7 @@ int main(int argc, char** argv) try
     cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16,fps);
     cfg.enable_stream(RS2_STREAM_INFRARED, 1, width, height, RS2_FORMAT_Y8, fps);
     cfg.enable_stream(RS2_STREAM_INFRARED, 2, width, height, RS2_FORMAT_Y8, fps);
-    cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F);
-    cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F);
+
 
     // get depth scale
     // float depth_scale = get_depth_scale(profile.get_device());
@@ -49,17 +48,6 @@ int main(int argc, char** argv) try
         rs2::align align_to_depth(RS2_STREAM_DEPTH);
         frames = align_to_depth.process(frames);
 
-        // Get imu data
-        if (rs2::motion_frame accel_frame = frames.first_or_default(RS2_STREAM_ACCEL))
-        {
-            rs2_vector accel_sample = accel_frame.get_motion_data();
-            std::cout << "Accel:" << accel_sample.x << ", " << accel_sample.y << ", " << accel_sample.z << std::endl;
-        }
-        if (rs2::motion_frame gyro_frame = frames.first_or_default(RS2_STREAM_GYRO))
-        {
-            rs2_vector gyro_sample = gyro_frame.get_motion_data();
-            std::cout << "Gyro:" << gyro_sample.x << ", " << gyro_sample.y << ", " << gyro_sample.z << std::endl;
-        }
 
         //Get each frame
         rs2::frame color_frame = frames.get_color_frame();

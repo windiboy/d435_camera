@@ -25,10 +25,10 @@ int main(int argc, char** argv) try
     //Contruct a pipeline which abstracts the device
     rs2::pipeline pipe;//创建一个通信管道//https://baike.so.com/doc/1559953-1649001.html pipeline的解释
     //Create a configuration for configuring the pipeline with a non default profile
-    rs2::config cfg;//创建一个以非默认配置的配置用来配置管道
+//    rs2::config cfg;//创建一个以非默认配置的配置用来配置管道
     //Add desired streams to configuration
-    cfg.enable_stream(RS2_STREAM_COLOR, width, height, RS2_FORMAT_BGR8, fps);//向配置添加所需的流
-    cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16,fps);
+//    cfg.enable_stream(RS2_STREAM_COLOR, width, height, RS2_FORMAT_BGR8, fps);//向配置添加所需的流
+//    cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16,fps);
 //    cfg.enable_stream(RS2_STREAM_INFRARED, 1, width, height, RS2_FORMAT_Y8, fps);
 //    cfg.enable_stream(RS2_STREAM_INFRARED, 2, width, height, RS2_FORMAT_Y8, fps);
 
@@ -37,7 +37,8 @@ int main(int argc, char** argv) try
     // float depth_scale = get_depth_scale(profile.get_device());
 
     // start stream
-    pipe.start(cfg);//指示管道使用所请求的配置启动流
+//    pipe.start(cfg);//指示管道使用所请求的配置启动流
+    pipe.start();
 
 
     while(1)

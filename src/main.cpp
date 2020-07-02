@@ -59,31 +59,44 @@ int main(int argc, char** argv) try
         imshow("Display depth", pic_depth*15);
         waitKey(1);
 
-        int iLowH = 100; int iHighH = 140; int iLowS = 90; int iHighS = 255; int iLowV = 90; int iHighV = 255;//设置蓝色的颜色参量。
+        int iLowH = 35;
+        int iHighH = 120;
+        int iLowS = 90;
+        int iHighS = 255;
+        int iLowV = 90;
+        int iHighV = 255;//设置蓝色的颜色参量。
         Mat imgHSV;
-        vector hsvSplit;
+        vector<Mat> hsvSplit;
+
         cvtColor(color, imgHSV, COLOR_BGR2HSV);
-
         split(imgHSV, hsvSplit);
-
         equalizeHist(hsvSplit[2],hsvSplit[2]);
-
         merge(hsvSplit,imgHSV);
 
         Mat imgThresholded;
-
         inRange(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded);
-
         Mat element = getStructuringElement(MORPH_RECT, Size(5, 5));
-
         morphologyEx(imgThresholded, imgThresholded, MORPH_OPEN, element);
-
         morphologyEx(imgThresholded, imgThresholded, MORPH_CLOSE, element);
-
-
         GaussianBlur(imgThresholded,imgThresholded, Size(3, 3), 0, 0);
 
         imshow("滤波后的图像", imgThresholded);
+
+        Mat tempImage=color.clone();
+        vector<vector<Point>>contours;
+        findContours(dstImage,contours,RETR_EXTERNAL,CHAIN_APPROX_NONE);
+        vector<Rect>rect(contours.size());
+        for(int i=0;i<contours.size();i++)
+        {
+            rect[i]=boundingRect(contours[i]);
+            int x=rect[i].x;
+            int y=rect[i].y;
+            int width=rect[i].width;
+            int height=rect[i].height;
+            rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
+        }
+        imshow("result",tempImage);
+
     }
     return 0;
 }

@@ -7,8 +7,6 @@
 
 int main(int argc, char * argv[]) try
 {
-    // Declare depth colorizer for pretty visualization of depth data
-    rs2::colorizer color_map;
 
     // Declare RealSense pipeline, encapsulating the actual device and sensors
     rs2::pipeline pipe;

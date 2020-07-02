@@ -47,7 +47,6 @@ int main(int argc, char** argv) try
         //Get each frame
         rs2::frame color_frame = frames.get_color_frame();
         rs2::frame depth_frame = frames.get_depth_frame();
-        rs2::depth_frame depth_ = frames.get_depth_frame();
 
 
         // Creating OpenCV Matrix from a color image
@@ -99,8 +98,7 @@ int main(int argc, char** argv) try
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
 
-        float dis_to_object = depth_.get_distance(x,y);
-        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
+        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< " )"<<endl;
         imshow("result",tempImage);
         imshow("Display depth", pic_depth);
     }

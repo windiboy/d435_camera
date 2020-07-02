@@ -10,6 +10,7 @@ project(d435_camera)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  OpenCV REQUIRED
 )
 
 set(REALSENSE_INCLUDE /opt/ros/melodic/include/)
@@ -30,14 +31,17 @@ catkin_package(
 include_directories(
   ${REALSENSE_INCLUDE}
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 
  add_executable(camera src/main.cpp)
  add_dependencies(camera ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
- target_link_libraries(camera ${catkin_LIBRARIES})
- target_link_libraries(camera ${REALSENSE_SRC})
+ target_link_libraries(camera ${catkin_LIBRARIES} ${REALSENSE_SRC} ${OpenCV_LIBS})
 
+add_executable(rs_imshow src/rs_imshow.cpp)
+add_dependencies(rs_imshow ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(rs_imshow ${catkin_LIBRARIES} ${REALSENSE_SRC} ${OpenCV_LIBS})
 #############
 ## Install ##
 #############

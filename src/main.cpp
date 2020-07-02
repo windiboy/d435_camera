@@ -48,7 +48,6 @@ int main(int argc, char** argv) try
         rs2::frame color_frame = frames.get_color_frame();
         rs2::frame depth_frame = frames.get_depth_frame();
 
-
         // Creating OpenCV Matrix from a color image
         Mat color(Size(WIDEH, HEIGHT), CV_8UC3, (void*)color_frame.get_data(), Mat::AUTO_STEP);
         Mat pic_depth(Size(WIDEH,HEIGHT), CV_16U, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
@@ -97,10 +96,13 @@ int main(int argc, char** argv) try
             int height=rect[i].height;
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
-
-        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< " )"<<endl;
+        rs2::depth_frame depth_ = frames.get_depth_frame();
+        float dis_to_object = depth_.get_distance(x,y);
+        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
         imshow("result",tempImage);
+        waitKey(1);
         imshow("Display depth", pic_depth);
+        waitKey(1);
     }
     return 0;
 }

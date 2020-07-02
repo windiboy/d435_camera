@@ -10,8 +10,8 @@ project(d435_camera)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  OpenCV REQUIRED
 )
+find_package(OpenCV REQUIRED NO_MODULE PATHS /usr/share NO_DEFAULT_PATH)
 
 set(REALSENSE_INCLUDE /opt/ros/melodic/include/)
 set(REALSENSE_SRC /opt/ros/melodic/lib/librealsense2.so.2.33.1)

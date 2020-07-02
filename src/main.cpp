@@ -6,8 +6,8 @@
 using namespace std;
 using namespace cv;
 
-#define width 480
-#define height 270
+#define width 320
+#define height 240
 #define fps 6
 
 
@@ -29,8 +29,8 @@ int main(int argc, char** argv) try
     //Add desired streams to configuration
     cfg.enable_stream(RS2_STREAM_COLOR, width, height, RS2_FORMAT_BGR8, fps);//向配置添加所需的流
     cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16,fps);
-    cfg.enable_stream(RS2_STREAM_INFRARED, 1, width, height, RS2_FORMAT_Y8, fps);
-    cfg.enable_stream(RS2_STREAM_INFRARED, 2, width, height, RS2_FORMAT_Y8, fps);
+//    cfg.enable_stream(RS2_STREAM_INFRARED, 1, width, height, RS2_FORMAT_Y8, fps);
+//    cfg.enable_stream(RS2_STREAM_INFRARED, 2, width, height, RS2_FORMAT_Y8, fps);
 
 
     // get depth scale
@@ -52,14 +52,14 @@ int main(int argc, char** argv) try
         //Get each frame
         rs2::frame color_frame = frames.get_color_frame();
         rs2::frame depth_frame = frames.get_depth_frame();
-        rs2::video_frame ir_frame_left = frames.get_infrared_frame(1);
-        rs2::video_frame ir_frame_right = frames.get_infrared_frame(2);
+//        rs2::video_frame ir_frame_left = frames.get_infrared_frame(1);
+//        rs2::video_frame ir_frame_right = frames.get_infrared_frame(2);
 
 
         // Creating OpenCV Matrix from a color image
         Mat color(Size(width, height), CV_8UC3, (void*)color_frame.get_data(), Mat::AUTO_STEP);
-        Mat pic_right(Size(width,height), CV_8UC1, (void*)ir_frame_right.get_data());
-        Mat pic_left(Size(width,height), CV_8UC1, (void*)ir_frame_left.get_data());
+//        Mat pic_right(Size(width,height), CV_8UC1, (void*)ir_frame_right.get_data());
+//        Mat pic_left(Size(width,height), CV_8UC1, (void*)ir_frame_left.get_data());
         Mat pic_depth(Size(width,height), CV_16U, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
 
         // Display in a GUI
@@ -68,10 +68,10 @@ int main(int argc, char** argv) try
         waitKey(1);
         imshow("Display depth", pic_depth*15);
         waitKey(1);
-        imshow("Display pic_left", pic_left);
-        waitKey(1);
-        imshow("Display pic_right",pic_right);
-        waitKey(1);
+//        imshow("Display pic_left", pic_left);
+//        waitKey(1);
+//        imshow("Display pic_right",pic_right);
+//        waitKey(1);
     }
     return 0;
 }

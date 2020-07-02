@@ -54,10 +54,10 @@ int main(int argc, char** argv) try
 
         // Display in a GUI
         namedWindow("Display Image", WINDOW_AUTOSIZE );
-        imshow("Display Image", color);
-        waitKey(1);
-        imshow("Display depth", pic_depth*15);
-        waitKey(1);
+//        imshow("Display Image", color);
+//        waitKey(1);
+//        imshow("Display depth", pic_depth*15);
+//        waitKey(1);
 
         int iLowH = 35;
         int iHighH = 120;
@@ -80,7 +80,7 @@ int main(int argc, char** argv) try
         morphologyEx(imgThresholded, imgThresholded, MORPH_CLOSE, element);
         GaussianBlur(imgThresholded,imgThresholded, Size(3, 3), 0, 0);
 
-        imshow("滤波后的图像", imgThresholded);
+//        imshow("滤波后的图像", imgThresholded);
 
         Mat tempImage=color.clone();
         vector<vector<Point>>contours;
@@ -95,8 +95,10 @@ int main(int argc, char** argv) try
             int height=rect[i].height;
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
+        float dis_to_object = depth_frame.get_distance(x,y);
+        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
         imshow("result",tempImage);
-
+        imshow("Display depth", pic_depth);
     }
     return 0;
 }

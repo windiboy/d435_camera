@@ -101,7 +101,7 @@ int main(int argc, char** argv) try
         cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
         imshow("result",tempImage);
         waitKey(1);
-        imshow("Display depth", pic_depth);
+        imshow("Display depth", pic_depth*15);
         waitKey(1);
     }
     return 0;

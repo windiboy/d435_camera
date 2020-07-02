@@ -6,9 +6,10 @@
 using namespace std;
 using namespace cv;
 
-#define width 640
-#define height 480
-#define fps 30
+//最低424*240 6fps 最高640*480 30fps
+#define width 424
+#define height 240
+#define fps 6
 
 
 int main(int argc, char** argv) try
@@ -29,16 +30,9 @@ int main(int argc, char** argv) try
     //Add desired streams to configuration
     cfg.enable_stream(RS2_STREAM_COLOR, width, height, RS2_FORMAT_BGR8, fps);//向配置添加所需的流
     cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16, fps);
-//    cfg.enable_stream(RS2_STREAM_INFRARED, 1, width, height, RS2_FORMAT_Y8, fps);
-//    cfg.enable_stream(RS2_STREAM_INFRARED, 2, width, height, RS2_FORMAT_Y8, fps);
-
-
-    // get depth scale
-    // float depth_scale = get_depth_scale(profile.get_device());
 
     // start stream
     pipe.start(cfg);//指示管道使用所请求的配置启动流
-//    pipe.start();
 
 
     while(1)
@@ -53,14 +47,9 @@ int main(int argc, char** argv) try
         //Get each frame
         rs2::frame color_frame = frames.get_color_frame();
         rs2::frame depth_frame = frames.get_depth_frame();
-//        rs2::video_frame ir_frame_left = frames.get_infrared_frame(1);
-//        rs2::video_frame ir_frame_right = frames.get_infrared_frame(2);
-
 
         // Creating OpenCV Matrix from a color image
         Mat color(Size(width, height), CV_8UC3, (void*)color_frame.get_data(), Mat::AUTO_STEP);
-//        Mat pic_right(Size(width,height), CV_8UC1, (void*)ir_frame_right.get_data());
-//        Mat pic_left(Size(width,height), CV_8UC1, (void*)ir_frame_left.get_data());
         Mat pic_depth(Size(width,height), CV_16U, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
 
         // Display in a GUI
@@ -69,10 +58,31 @@ int main(int argc, char** argv) try
         waitKey(1);
         imshow("Display depth", pic_depth*15);
         waitKey(1);
-//        imshow("Display pic_left", pic_left);
-//        waitKey(1);
-//        imshow("Display pic_right",pic_right);
-//        waitKey(1);
+
+        int iLowH = 100; int iHighH = 140; int iLowS = 90; int iHighS = 255; int iLowV = 90; int iHighV = 255;//设置蓝色的颜色参量。
+
+        cvtColor(color, imgHSV, COLOR_BGR2HSV);
+
+        split(imgHSV, hsvSplit);
+
+        equalizeHist(hsvSplit[2],hsvSplit[2]);
+
+        merge(hsvSplit,imgHSV);
+
+        Mat imgThresholded;
+
+        inRange(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded);  //开操作 (去除一些噪点)
+
+        Mat element = getStructuringElement(MORPH_RECT, Size(5, 5));
+
+        morphologyEx(imgThresholded, imgThresholded, MORPH_OPEN, element); //闭操作 (连接一些连通域)
+
+        morphologyEx(imgThresholded, imgThresholded, MORPH_CLOSE, element);
+
+
+        GaussianBlur(imgThresholded,imgThresholded, Size(3, 3), 0, 0);
+
+        imshow("滤波后的图像", imgThresholded);
     }
     return 0;
 }

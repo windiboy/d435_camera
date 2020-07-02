@@ -53,7 +53,7 @@ int main(int argc, char** argv) try
         Mat pic_depth(Size(WIDEH,HEIGHT), CV_16U, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
 
         // Display in a GUI
-        namedWindow("Display Image", WINDOW_AUTOSIZE );
+//        namedWindow("Display Image", WINDOW_AUTOSIZE );
 //        imshow("Display Image", color);
 //        waitKey(1);
 //        imshow("Display depth", pic_depth*15);

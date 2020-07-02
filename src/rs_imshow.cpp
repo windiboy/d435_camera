@@ -39,6 +39,7 @@ int main(int argc, char * argv[]) try
 
         // Update the window with new data
         imshow(window_name, image);
+        waitKey(1);
         std::cout << "#######" << std::endl;
     }
 

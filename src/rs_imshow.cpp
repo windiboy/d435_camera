@@ -20,7 +20,7 @@ int main(int argc, char * argv[]) try
     while (getWindowProperty(window_name, WND_PROP_AUTOSIZE) >= 0)
     {
         rs2::frameset data = pipe.wait_for_frames(); // Wait for next set of frames from the camera
-        rs2::frame depth = data.get_color_frame().apply_filter(color_map);
+        rs2::frame depth = data.get_color_frame();
 
         // Query frame size (width and height)
         const int w = depth.as<rs2::video_frame>().get_width();

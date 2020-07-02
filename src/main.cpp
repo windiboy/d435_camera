@@ -60,7 +60,8 @@ int main(int argc, char** argv) try
         waitKey(1);
 
         int iLowH = 100; int iHighH = 140; int iLowS = 90; int iHighS = 255; int iLowV = 90; int iHighV = 255;//设置蓝色的颜色参量。
-
+        Mat imgHSV;
+        vector hsvSplit;
         cvtColor(color, imgHSV, COLOR_BGR2HSV);
 
         split(imgHSV, hsvSplit);

@@ -7,9 +7,9 @@ using namespace std;
 using namespace cv;
 
 //最低424*240 6fps 最高640*480 30fps
-#define width 424
-#define height 240
-#define fps 6
+#define WIDEH 424
+#define HEIGHT 240
+#define FPS 6
 
 
 int main(int argc, char** argv) try
@@ -28,8 +28,8 @@ int main(int argc, char** argv) try
     //Create a configuration for configuring the pipeline with a non default profile
     rs2::config cfg;//创建一个以非默认配置的配置用来配置管道
     //Add desired streams to configuration
-    cfg.enable_stream(RS2_STREAM_COLOR, width, height, RS2_FORMAT_BGR8, fps);//向配置添加所需的流
-    cfg.enable_stream(RS2_STREAM_DEPTH, width, height, RS2_FORMAT_Z16, fps);
+    cfg.enable_stream(RS2_STREAM_COLOR, WIDEH, HEIGHT, RS2_FORMAT_BGR8, FPS);//向配置添加所需的流
+    cfg.enable_stream(RS2_STREAM_DEPTH, WIDEH, HEIGHT, RS2_FORMAT_Z16, FPS);
 
     // start stream
     pipe.start(cfg);//指示管道使用所请求的配置启动流
@@ -84,7 +84,7 @@ int main(int argc, char** argv) try
 
         Mat tempImage=color.clone();
         vector<vector<Point>>contours;
-        findContours(dstImage,contours,RETR_EXTERNAL,CHAIN_APPROX_NONE);
+        findContours(imgThresholded,contours,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         vector<Rect>rect(contours.size());
         for(int i=0;i<contours.size();i++)
         {

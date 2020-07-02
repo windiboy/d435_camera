@@ -49,8 +49,8 @@ int main(int argc, char** argv) try
         rs2::frame depth_frame = frames.get_depth_frame();
 
         // Creating OpenCV Matrix from a color image
-        Mat color(Size(width, height), CV_8UC3, (void*)color_frame.get_data(), Mat::AUTO_STEP);
-        Mat pic_depth(Size(width,height), CV_16U, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
+        Mat color(Size(WIDEH, HEIGHT), CV_8UC3, (void*)color_frame.get_data(), Mat::AUTO_STEP);
+        Mat pic_depth(Size(WIDEH,HEIGHT), CV_16U, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
 
         // Display in a GUI
         namedWindow("Display Image", WINDOW_AUTOSIZE );

@@ -86,16 +86,18 @@ int main(int argc, char** argv) try
         vector<vector<Point>>contours;
         findContours(imgThresholded,contours,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         vector<Rect>rect(contours.size());
+        int x,y;
         for(int i=0;i<contours.size();i++)
         {
             rect[i]=boundingRect(contours[i]);
-            int x=rect[i].x;
-            int y=rect[i].y;
+            x=rect[i].x;
+            y=rect[i].y;
             int width=rect[i].width;
             int height=rect[i].height;
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
-        float dis_to_object = depth_frame.get_distance(x,y);
+        rs2::depth_frame depth_ = frames.get_depth_frame();
+        float dis_to_object = depth_.get_distance(x,y);
         cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
         imshow("result",tempImage);
         imshow("Display depth", pic_depth);

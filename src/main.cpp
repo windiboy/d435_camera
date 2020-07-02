@@ -71,11 +71,11 @@ int main(int argc, char** argv) try
 
         Mat imgThresholded;
 
-        inRange(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded);  //开操作 (去除一些噪点)
+        inRange(imgHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgThresholded);
 
         Mat element = getStructuringElement(MORPH_RECT, Size(5, 5));
 
-        morphologyEx(imgThresholded, imgThresholded, MORPH_OPEN, element); //闭操作 (连接一些连通域)
+        morphologyEx(imgThresholded, imgThresholded, MORPH_OPEN, element);
 
         morphologyEx(imgThresholded, imgThresholded, MORPH_CLOSE, element);
 

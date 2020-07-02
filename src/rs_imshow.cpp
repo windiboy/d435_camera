@@ -3,6 +3,7 @@
 
 #include <librealsense2/rs.hpp> // Include RealSense Cross Platform API
 #include <opencv2/opencv.hpp>   // Include OpenCV API
+#include <iostream>             // for cout
 
 int main(int argc, char * argv[]) try
 {
@@ -19,7 +20,7 @@ int main(int argc, char * argv[]) try
     namedWindow(window_name, WINDOW_AUTOSIZE);
 
 //    while (waitKey(1) < 0 && getWindowProperty(window_name, WND_PROP_AUTOSIZE) >= 0)
-    while(1)
+    while(true)
     {
         rs2::frameset data = pipe.wait_for_frames(); // Wait for next set of frames from the camera
         rs2::frame depth = data.get_depth_frame().apply_filter(color_map);
@@ -33,6 +34,7 @@ int main(int argc, char * argv[]) try
 
         // Update the window with new data
         imshow(window_name, image);
+        std::cout << "#######" << endl;
     }
 
     return EXIT_SUCCESS;

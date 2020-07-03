@@ -223,7 +223,7 @@ int main(int argc, char** argv) try
         waitKey(1);
 
         float ponit[3]={0,0,0};
-        float pixel[2]={x,y};
+        float pixel[2]={212,120};
         rs2_deproject_pixel_to_point(ponit,&intrinDepth,pixel, measure_distance(color,result,pixel,Size(20,20),profile));
         cout<<"In Camera Coordinate "<<"( "<<ponit[0]<<","<<ponit[1]<<","<< ponit[2] <<" )"<<endl;
         imshow("measure",color);

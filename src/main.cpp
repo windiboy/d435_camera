@@ -28,12 +28,12 @@ float get_depth_scale(rs2::device dev)
     throw std::runtime_error("Device does not have a depth sensor");
 }
 
-void measure_distance(Mat &color,Mat depth,cv::Size range,rs2::pipeline_profile profile)
+float measure_distance(Mat &color,Mat depth,float pixel[2],cv::Size range,rs2::pipeline_profile profile)
 {
     //获取深度像素与现实单位比例（D435默认1毫米）
     float depth_scale = get_depth_scale(profile.get_device());
     //定义图像中心点
-    cv::Point center(color.cols/2,color.rows/2);
+    cv::Point center(pixel[0],pixel[1]);
     //定义计算距离的范围
     cv::Rect RectRange(center.x-range.width/2,center.y-range.height/2,range.width,range.height);
     //遍历该范围
@@ -56,6 +56,7 @@ void measure_distance(Mat &color,Mat depth,cv::Size range,rs2::pipeline_profile 
     cv::rectangle(color,RectRange,Scalar(0,0,255),2,8);
     cv::putText(color,(string)distance_str,cv::Point(color.cols*0.02,color.rows*0.05),
                 cv::FONT_HERSHEY_PLAIN,2,Scalar(0,255,0),2,8);
+    return effective_distance;
 }
 
 int main(int argc, char** argv) try
@@ -160,8 +161,11 @@ int main(int argc, char** argv) try
         waitKey(1);
 //        imshow("Display depth", pic_depth*15);
 //        waitKey(1);
-
-        measure_distance(color,pic_depth,Size(20,20),profile);
+        float ponit[3];
+        float pixel[2]={x,y};
+        rs2_deproject_pixel_to_point(ponit[3],intrinDepth,pixel, measure_distance(color,pic_depth,pixel[2],Size(20,20),profile))
+        imshow("measure",color);
+        waitKey(1);
     }
     return 0;
 }

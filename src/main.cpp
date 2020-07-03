@@ -89,13 +89,14 @@ int main(int argc, char** argv) try
 
     auto extrinDepth2Color = depth_stream.get_extrinsics_to(color_stream);
 
+    rs2::align align_to_depth(RS2_STREAM_DEPTH);
+    rs2::align align_to_color(RS2_STREAM_COLOR);
     while(1)
     {
         frames = pipe.wait_for_frames();//等待所有配置的流生成框架
 
         // Align to depth
-        rs2::align align_to_depth(RS2_STREAM_DEPTH);
-        frames = align_to_depth.process(frames);
+        frames = align_to_color.process(frames);
 
 
         //Get each frame
@@ -109,11 +110,10 @@ int main(int argc, char** argv) try
         Mat pic_depth(Size(WIDEH,HEIGHT), CV_16U, (void*)depth_frame.get_data(), Mat::AUTO_STEP);
 
         // Display in a GUI
-//        namedWindow("Display Image", WINDOW_AUTOSIZE );
-//        imshow("Display Image", color);
-//        waitKey(1);
-//        imshow("Display depth", pic_depth*15);
-//        waitKey(1);
+        imshow("Display Image", color);
+        waitKey(1);
+        imshow("Display depth", pic_depth*15);
+        waitKey(1);
 
         int iLowH = 35;
         int iHighH = 120;
@@ -152,16 +152,10 @@ int main(int argc, char** argv) try
             int height=rect[i].height;
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
-//        rs2::depth_frame depth_ = frames.get_depth_frame();
-//        float dis_to_object = depth_.get_distance(x,y);
-//        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
-//
-//
+
 //        imshow("result",tempImage);
 //        waitKey(1);
 
-//        imshow("Display depth", pic_depth*15);
-//        waitKey(1);
         float ponit[3];
         float pixel[2]={x,y};
         rs2_deproject_pixel_to_point(ponit,&intrinDepth,pixel, measure_distance(color,pic_depth,pixel,Size(20,20),profile));

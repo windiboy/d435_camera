@@ -142,7 +142,7 @@ int main(int argc, char** argv) try
         vector<vector<Point>>contours;
         findContours(imgThresholded,contours,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         vector<Rect>rect(contours.size());
-        int x,y;
+        float x,y;
         for(int i=0;i<contours.size();i++)
         {
             rect[i]=boundingRect(contours[i]);
@@ -163,7 +163,7 @@ int main(int argc, char** argv) try
 //        waitKey(1);
         float ponit[3];
         float pixel[2]={x,y};
-        rs2_deproject_pixel_to_point(ponit[3],intrinDepth,pixel, measure_distance(color,pic_depth,pixel[2],Size(20,20),profile))
+        rs2_deproject_pixel_to_point(ponit,intrinDepth,pixel, measure_distance(color,pic_depth,pixel,Size(20,20),profile))
         imshow("measure",color);
         waitKey(1);
     }

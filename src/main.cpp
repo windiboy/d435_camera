@@ -96,7 +96,7 @@ int main(int argc, char** argv) try
         frames = pipe.wait_for_frames();//等待所有配置的流生成框架
 
         // Align to depth
-        frames = align_to_color.process(frames);
+        frames = align_to_depth.process(frames);
 
 
         //Get each frame
@@ -153,8 +153,8 @@ int main(int argc, char** argv) try
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
 
-//        imshow("result",tempImage);
-//        waitKey(1);
+        imshow("color recognition result",tempImage);
+        waitKey(1);
 
         float ponit[3];
         float pixel[2]={x,y};

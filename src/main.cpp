@@ -152,10 +152,6 @@ int main(int argc, char** argv) try
             int height=rect[i].height;
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
-        rs2::depth_frame depth_ = frames.get_depth_frame();
-        float dis_to_object = depth_.get_distance(x,y);
-        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
-
 
         imshow("result",tempImage);
         waitKey(1);
@@ -163,7 +159,8 @@ int main(int argc, char** argv) try
 //        waitKey(1);
         float ponit[3];
         float pixel[2]={x,y};
-        rs2_deproject_pixel_to_point(ponit,intrinDepth,pixel, measure_distance(color,pic_depth,pixel,Size(20,20),profile))
+        rs2_deproject_pixel_to_point(ponit,&intrinDepth,pixel, measure_distance(color,pic_depth,pixel,Size(20,20),profile));
+        cout<<"In Camera Coordinate "<<"( "<<ponit[0]<<","<<ponit[1]<<","<< ponit[2] <<" )"<<endl;
         imshow("measure",color);
         waitKey(1);
     }

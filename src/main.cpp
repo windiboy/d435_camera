@@ -181,7 +181,7 @@ int main(int argc, char** argv) try
         imshow("Display depth_aligned", result);
         waitKey(1);
 
-        int iLowH = 60;
+        int iLowH = 40;
         int iHighH = 120;
         int iLowS = 90;
         int iHighS = 255;
@@ -209,13 +209,14 @@ int main(int argc, char** argv) try
         findContours(imgThresholded,contours,RETR_EXTERNAL,CHAIN_APPROX_NONE);
         vector<Rect>rect(contours.size());
         float x=0,y=0;
+        int width=0,height=0;
         for(int i=0;i<contours.size();i++)
         {
             rect[i]=boundingRect(contours[i]);
             x=rect[i].x;
             y=rect[i].y;
-            int width=rect[i].width;
-            int height=rect[i].height;
+            width=rect[i].width;
+            height=rect[i].height;
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
 
@@ -223,7 +224,7 @@ int main(int argc, char** argv) try
         waitKey(1);
 
         float ponit[3]={0,0,0};
-        float pixel[2]={x,y};
+        float pixel[2]={x+width/2,y+height/2};
         rs2_deproject_pixel_to_point(ponit,&intrinDepth,pixel, measure_distance(color,result,pixel,Size(20,20),profile));
         cout<<"In Camera Coordinate "<<"( "<<ponit[0]<<","<<ponit[1]<<","<< ponit[2] <<" )"<<endl;
         imshow("measure",color);

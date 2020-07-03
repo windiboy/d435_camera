@@ -1,4 +1,5 @@
 #include <librealsense2/rs.hpp>
+#include <librealsense2/rsutil.h>
 
 // include OpenCV header file
 #include <opencv2/opencv.hpp>
@@ -11,6 +12,21 @@ using namespace cv;
 #define HEIGHT 240
 #define FPS 6
 
+
+//获取深度像素对应长度单位（米）的换算比例
+float get_depth_scale(rs2::device dev)
+{
+    // Go over the device's sensors
+    for (rs2::sensor& sensor : dev.query_sensors())
+    {
+        // Check if the sensor if a depth sensor
+        if (rs2::depth_sensor dpt = sensor.as<rs2::depth_sensor>())
+        {
+            return dpt.get_depth_scale();
+        }
+    }
+    throw std::runtime_error("Device does not have a depth sensor");
+}
 
 void measure_distance(Mat &color,Mat depth,cv::Size range,rs2::pipeline_profile profile)
 {
@@ -142,8 +158,8 @@ int main(int argc, char** argv) try
 
         imshow("result",tempImage);
         waitKey(1);
-        imshow("Display depth", pic_depth*15);
-        waitKey(1);
+//        imshow("Display depth", pic_depth*15);
+//        waitKey(1);
 
         measure_distance(color,pic_depth,Size(20,20),profile);
     }

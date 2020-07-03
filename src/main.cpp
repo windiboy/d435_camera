@@ -152,13 +152,14 @@ int main(int argc, char** argv) try
             int height=rect[i].height;
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
-        rs2::depth_frame depth_ = frames.get_depth_frame();
-        float dis_to_object = depth_.get_distance(x,y);
-        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
+//        rs2::depth_frame depth_ = frames.get_depth_frame();
+//        float dis_to_object = depth_.get_distance(x,y);
+//        cout<<"Object\n"<<"( "<<x<<","<<y<<","<< dis_to_object <<" )"<<endl;
+//
+//
+//        imshow("result",tempImage);
+//        waitKey(1);
 
-
-        imshow("result",tempImage);
-        waitKey(1);
 //        imshow("Display depth", pic_depth*15);
 //        waitKey(1);
         float ponit[3];

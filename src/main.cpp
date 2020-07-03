@@ -181,7 +181,7 @@ int main(int argc, char** argv) try
         imshow("Display depth_aligned", result);
         waitKey(1);
 
-        int iLowH = 35;
+        int iLowH = 60;
         int iHighH = 120;
         int iLowS = 90;
         int iHighS = 255;
@@ -223,7 +223,7 @@ int main(int argc, char** argv) try
         waitKey(1);
 
         float ponit[3]={0,0,0};
-        float pixel[2]={212,120};
+        float pixel[2]={x,y};
         rs2_deproject_pixel_to_point(ponit,&intrinDepth,pixel, measure_distance(color,result,pixel,Size(20,20),profile));
         cout<<"In Camera Coordinate "<<"( "<<ponit[0]<<","<<ponit[1]<<","<< ponit[2] <<" )"<<endl;
         imshow("measure",color);

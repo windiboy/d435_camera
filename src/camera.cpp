@@ -23,13 +23,14 @@ void transfer(float *out, float *in){
     MatrixXf a(3,3);
     a << cos(ALPHA),0,sin(ALPHA),0,1,0,-1*sin(ALPHA),0,cos(ALPHA);
     MatrixXf b(3,3);
-    b << 1,0,0,0,cos(BETA),-1*sin(BETA),0,sin(BETA),cos(BETA);
+//    b << 1,0,0,0,cos(BETA),-1*sin(BETA),0,sin(BETA),cos(BETA);
+    b << cos(BETA),-1*sin(BETA),0,sin(BETA),cos(BETA),0,0,0,1;
     Vector3f point_b(3);
     Vector3f result(3);
     Vector3f offset(3);
     point_b << in[0],in[1],in[2];
     offset << 0.1055,0,1.32;
-    result = a*b*point_b+offset;
+    result = b*a*point_b+offset;
     out[0] = result(0);
     out[1] = result(1);
     out[2] = result(2);

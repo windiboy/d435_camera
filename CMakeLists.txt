@@ -36,7 +36,7 @@ include_directories(
 )
 
 
- add_executable(camera src/camera.cpp)
+ add_executable(camera src/camera.cpp geometry_msgs)
  add_dependencies(camera ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  target_link_libraries(camera ${catkin_LIBRARIES} ${REALSENSE_SRC} ${OpenCV_LIBS})
 

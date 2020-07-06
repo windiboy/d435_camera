@@ -2,7 +2,7 @@
 #include <librealsense2/rsutil.h>
 #include <opencv2/opencv.hpp>
 #include "ros/ros.h"
-#include "geometry_msgs/Point"
+#include "geometry_msgs/Point.h"
 
 using namespace std;
 using namespace cv;
@@ -123,7 +123,7 @@ float measure_distance(Mat &color,Mat depth,float pixel[2],cv::Size range,rs2::p
 
 int main(int argc, char** argv) try
 {
-    ros::init(argumentCount,argumentValues, "camera_recognition");
+    ros::init(argc,argv, "camera_recognition");
     ros::NodeHandle n;
 
     ros::Publisher pub = n.advertise<geometry_msgs/Point>("camera_point",1);

@@ -126,7 +126,7 @@ int main(int argc, char** argv) try
     ros::init(argc,argv, "camera_recognition");
     ros::NodeHandle n;
 
-    ros::Publisher pub = n.advertise<geometry_msgs/Point>("camera_point",1);
+    ros::Publisher pub = n.advertise<geometry_msgs/Point>("camera_point",50);
     ros::Rate loop_rate(10);
     geometry_msgs::Point msg;
 

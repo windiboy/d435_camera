@@ -3,14 +3,38 @@
 #include <opencv2/opencv.hpp>
 #include "ros/ros.h"
 #include "geometry_msgs/Point.h"
+#include "math.h"
+#include <Eigen/Dense>
 
 using namespace std;
 using namespace cv;
+using namespace Eigen;
 
 //最低424*240 6fps 最高640*480 30fps
 #define WIDEH 424
 #define HEIGHT 240
 #define FPS 6
+
+#define PI 3.1415926
+#define ALPHA -PI/2
+#define BETA 3*PI/4
+
+void transfer(float *out, float *in){
+    MatrixXf a(3,3);
+    a << cos(ALPHA),0,sin(ALPHA),0,1,0,-1*sin(ALPHA),0,cos(ALPHA);
+    MatrixXf b(3,3);
+    b << 1,0,0,0,cos(BETA),-1*sin(BETA),0,sin(BETA),cos(BETA);
+    Vector3d point_b(3);
+    Vector3d result(3);
+    Vector3d offset(3);
+    point_b << in[0],in[1],in[2];
+    offset << 0.1055,0,1.32;
+    result = a*b*point_b+offset;
+    out[0] = result(0);
+    out[1] = result(1);
+    out[2] = result(2);
+
+}
 
 
 //获取深度像素对应长度单位（米）的换算比例
@@ -234,9 +258,11 @@ int main(int argc, char** argv) try
         imshow("measure",color);
         waitKey(1);
 
-        msg.x = ponit[0];
-        msg.y = ponit[1];
-        msg.z = ponit[2];
+        float final[3]={0,0,0};
+        transfer(final,ponit);
+        msg.x = final[0];
+        msg.y = final[1];
+        msg.z = final[2];
         pub.publish(msg);
         loop_rate.sleep();
 

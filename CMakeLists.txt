@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   geometry_msgs
+  Eigen3.3 REQUIRED NO_MODULE
 )
 find_package(OpenCV REQUIRED NO_MODULE PATHS /usr/share NO_DEFAULT_PATH)
 
@@ -38,7 +39,7 @@ include_directories(
 
  add_executable(camera src/camera.cpp )
  add_dependencies(camera ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
- target_link_libraries(camera ${catkin_LIBRARIES} ${REALSENSE_SRC} ${OpenCV_LIBS})
+ target_link_libraries(camera ${catkin_LIBRARIES} ${REALSENSE_SRC} ${OpenCV_LIBS} Eigen3::Eigen)
 
 add_executable(rs_imshow src/rs_imshow.cpp)
 add_dependencies(rs_imshow ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

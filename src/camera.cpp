@@ -24,9 +24,9 @@ void transfer(float *out, float *in){
     a << cos(ALPHA),0,sin(ALPHA),0,1,0,-1*sin(ALPHA),0,cos(ALPHA);
     MatrixXf b(3,3);
     b << 1,0,0,0,cos(BETA),-1*sin(BETA),0,sin(BETA),cos(BETA);
-    Vector3d point_b(3);
-    Vector3d result(3);
-    Vector3d offset(3);
+    Vector3f point_b(3);
+    Vector3f result(3);
+    Vector3f offset(3);
     point_b << in[0],in[1],in[2];
     offset << 0.1055,0,1.32;
     result = a*b*point_b+offset;

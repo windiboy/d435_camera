@@ -29,7 +29,7 @@ void transfer(float *out, float *in){
     Vector3f result(3);
     Vector3f offset(3);
     point_b << in[0],in[1],in[2];
-    offset << 0.1055,0,1.32;
+    offset << 0.1055,1.32,0;
     result = b*a*point_b+offset;
     out[0] = result(0);
     out[1] = result(1);

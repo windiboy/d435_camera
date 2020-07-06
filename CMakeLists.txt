@@ -11,11 +11,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   geometry_msgs
-  Eigen3.3 REQUIRED NO_MODULE
 )
 find_package(OpenCV REQUIRED NO_MODULE PATHS /usr/share NO_DEFAULT_PATH)
 
 set(REALSENSE_INCLUDE /opt/ros/melodic/include/)
+set(EIGEN_INCLUDE /usr/include/eigen3/)
 set(REALSENSE_SRC /opt/ros/melodic/lib/librealsense2.so.2.33.1)
 catkin_package(
 #  INCLUDE_DIRS include
@@ -32,6 +32,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   ${REALSENSE_INCLUDE}
+  ${EIGEN_INCLUDE}
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
@@ -39,7 +40,7 @@ include_directories(
 
  add_executable(camera src/camera.cpp )
  add_dependencies(camera ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
- target_link_libraries(camera ${catkin_LIBRARIES} ${REALSENSE_SRC} ${OpenCV_LIBS} Eigen3::Eigen)
+ target_link_libraries(camera ${catkin_LIBRARIES} ${REALSENSE_SRC} ${OpenCV_LIBS})
 
 add_executable(rs_imshow src/rs_imshow.cpp)
 add_dependencies(rs_imshow ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

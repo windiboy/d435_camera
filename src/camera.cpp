@@ -152,7 +152,7 @@ int main(int argc, char** argv) try
     ros::NodeHandle n;
 
     ros::Publisher pub = n.advertise<geometry_msgs::Point>("camera_point",50);
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(50);
     geometry_msgs::Point msg;
 
     // judge whether devices is exist or not

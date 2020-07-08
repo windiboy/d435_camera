@@ -135,9 +135,9 @@ float measure_distance(Mat &color,Mat depth,float pixel[2],cv::Size range,rs2::p
             }
         }
     }
-    cout<<"遍历完成，有效像素点:"<<effective_pixel<<endl;
+//    cout<<"遍历完成，有效像素点:"<<effective_pixel<<endl;
     float effective_distance=distance_sum/effective_pixel;
-    cout<<"目标距离："<<effective_distance<<" m"<<endl;
+//    cout<<"目标距离："<<effective_distance<<" m"<<endl;
     char distance_str[30];
     sprintf(distance_str,"the distance is:%f m",effective_distance);
     cv::rectangle(color,RectRange,Scalar(0,0,255),2,8);
@@ -255,7 +255,7 @@ int main(int argc, char** argv) try
         float ponit[3]={0,0,0};
         float pixel[2]={x+width/2,y+height/2};
         rs2_deproject_pixel_to_point(ponit,&intrinDepth,pixel, measure_distance(color,result,pixel,Size(20,20),profile));
-        cout<<"In Camera Coordinate "<<"( "<<ponit[0]<<","<<ponit[1]<<","<< ponit[2] <<" )"<<endl;
+//        cout<<"In Camera Coordinate "<<"( "<<ponit[0]<<","<<ponit[1]<<","<< ponit[2] <<" )"<<endl;
         imshow("measure",color);
         waitKey(1);
 

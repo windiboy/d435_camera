@@ -212,9 +212,9 @@ int main(int argc, char** argv) try
 
         int iLowH = 40;
         int iHighH = 120;
-        int iLowS = 90;
+        int iLowS = 60;
         int iHighS = 255;
-        int iLowV = 90;
+        int iLowV = 60;
         int iHighV = 255;//设置蓝色的颜色参量。
         Mat imgHSV;
         vector<Mat> hsvSplit;
@@ -231,7 +231,8 @@ int main(int argc, char** argv) try
         morphologyEx(imgThresholded, imgThresholded, MORPH_CLOSE, element);
         GaussianBlur(imgThresholded,imgThresholded, Size(3, 3), 0, 0);
 
-//        imshow("滤波后的图像", imgThresholded);
+        // imshow("滤波后的图像", imgThresholded);
+        // waitKey(1);
 
         Mat tempImage=color.clone();
         vector<vector<Point>>contours;
@@ -249,8 +250,8 @@ int main(int argc, char** argv) try
             rectangle(tempImage,Point(x,y),Point(x+width,y+height),Scalar(0,255,0),2);
         }
 
-//        imshow("color recognition result",tempImage);
-//        waitKey(1);
+    //    imshow("color recognition result",tempImage);
+    //    waitKey(1);
 
         float ponit[3]={0,0,0};
         float pixel[2]={x+width/2,y+height/2};

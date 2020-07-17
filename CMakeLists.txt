@@ -11,12 +11,13 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   geometry_msgs
+  nav_msgs
 )
-find_package(OpenCV REQUIRED NO_MODULE PATHS /usr/share NO_DEFAULT_PATH)
+find_package(OpenCV 3.4.2)
 
 set(REALSENSE_INCLUDE /opt/ros/melodic/include/)
 set(EIGEN_INCLUDE /usr/include/eigen3/)
-set(REALSENSE_SRC /opt/ros/melodic/lib/librealsense2.so.2.33.1)
+set(REALSENSE_SRC /opt/ros/melodic/lib/librealsense2.so)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES d435_camera
